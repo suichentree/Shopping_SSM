@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 为mapper指定唯一的命名空间（建议是，dao接口的完整类路径 -->
+<mapper namespace="com.dao.Userdao">
+
+<!-- 
+namespace 命名空间 ，以前可以随便命名，当使用接口式编程(sql映射文件要与对应的接口进行动态绑定)时，要命名为接口的全类名
+#{id}:从传递过来的参数取出id值
+-->
+
+<!-- insert 的 id 值 应该为对应dao接口的方法名相同 --> 
+
+<insert id="insertUser" parameterType="com.entity.User">         
+insert into user
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		username,password,
+	<if test='phone != null and phone != "" '>
+             phone,
+    </if>
+    <if test='address != null and address != "" '>
+             address,
+    </if>
+    <if test='realname != null and realname != "" '>
+             realname,
+    </if>
+    <if test='age != null and age != "" '>
+             age,
+    </if>
+    <if test='gender != null and gender != "" '>
+             gender,
+    </if>
+    <if test='status != null and status != "" '>
+             status,
+    </if>
+    
+    </trim>
+	
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		
+		   #{username}, #{password},
+		    <if test='phone != null and phone != "" '>
+            		 #{phone},
+		    </if>
+		    <if test='address != null and address != "" '>
+		              #{address},
+		    </if>
+		    <if test='realname != null and realname != "" '>
+		            #{realname},
+		    </if>
+		    <if test='age != null and age != "" '>
+		             #{age},
+		    </if>
+		    <if test='gender != null and gender != "" '>
+		             #{gender},
+		    </if>
+		    <if test='status != null and status != "" '>
+		             #{status},
+		    </if>
+		   
+		    
+		</trim>
+</insert>
+
+
+<delete id="deleteUser" parameterType="com.entity.User">
+delete from user where id=#{id}
+</delete>
+		
+
+		
+<update id="updateUser" parameterType="com.entity.User">
+update user
+	<trim prefix="set" suffixOverrides=",">
+		<if test="username !=null and username !='' ">username=#{username},</if>
+		<if test="password !=null and password !='' ">password=#{password},</if>
+		<if test="address !=null  and address !='' ">address=#{address},</if>
+		<if test="realname !=null and realname !='' ">realname=#{realname},</if>
+		<if test="age !=null and age !='' ">age=#{age},</if>
+		<if test="gender !=null and gender !='' ">gender=#{gender},</if>
+		<if test="status !=null and status !='' ">status=#{status},</if>
+		
+		
+	</trim>
+	where id=#{id}
+</update>
+
+
+<select id="selectUser" resultType="com.entity.User" parameterType="com.entity.User">
+	select * from user where 1=1
+	 	<if test="id !=null">and id=#{id}</if>
+		<if test="username !=null">and username=#{username}</if>
+		<if test="password !=null">and password=#{password}</if>
+		<if test="phone !=null">and phone=#{phone}</if>
+		<if test="address !=null">and address=#{address}</if>
+		<if test="realname !=null">and realname=#{realname}</if>
+		<if test="age !=null">and age=#{age}</if>
+		<if test="gender !=null">and gender=#{gender}</if>
+		<if test="status !=null">and status=#{status}</if>
+		
+</select>
+
+
+		
+<select id="selectAllUser" resultType="com.entity.User">
+		select * from user
+</select>
+		  
+<select id="selectUserByusername" resultType="com.entity.User">
+		select * from user where username=#{username}
+</select>		  
+	
+</mapper>
+
+

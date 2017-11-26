@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 为mapper指定唯一的命名空间（建议是，dao接口的完整类路径 -->
+<mapper namespace="com.dao.Goodsdao">
+
+<!-- 
+namespace 命名空间 ，以前可以随便命名，当使用接口式编程(sql映射文件要与对应的接口进行动态绑定)时，要命名为接口的全类名
+#{id}:从传递过来的参数取出id值
+-->
+
+<!-- insert 的 id 值 应该为对应dao接口的方法名相同 --> 
+
+<insert id="insertGoods" parameterType="com.entity.Goods">         
+insert into goods
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		
+	<if test='type != null and type != "" '>
+             type,
+    </if>
+    <if test='suitpeople != null and suitpeople != "" '>
+             suitpeople,
+    </if>
+    <if test='name != null and name != "" '>
+             name,
+    </if>
+    <if test='market_price != null and market_price != "" '>
+             market_price,
+    </if>
+    <if test='shop_price != null and shop_price != "" '>
+             shop_price,
+    </if>
+     <if test='createtime != null and createtime != "" '>
+             createtime,
+    </if>
+    
+    
+    </trim>
+	
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		
+		  
+		    <if test='type != null and type != "" '>
+            		 #{type},
+		    </if>
+		    <if test='suitpeople != null and suitpeople != "" '>
+		              #{suitpeople},
+		    </if>
+		    <if test='name != null and name != "" '>
+		              #{name},
+		    </if>
+		    <if test='market_price != null and market_price != "" '>
+		            #{market_price},
+		    </if>
+		    <if test='shop_price != null and shop_price != "" '>
+		             #{shop_price},
+		    </if>
+		    <if test='createtime != null and createtime != "" '>
+		             #{createtime},
+		    </if>
+		   
+		</trim>
+</insert>
+
+
+<delete id="deleteGoods" parameterType="com.entity.Goods">
+delete from goods where id=#{id}
+</delete>
+		
+
+		
+<update id="updateGoods" parameterType="com.entity.Goods">
+update goods
+	<trim prefix="set" suffixOverrides=",">
+		<if test="type !=null">type=#{type},</if>
+		<if test="suitpeople !=null">suitpeople=#{suitpeople},</if>
+		<if test="name !=null">name=#{name},</if>
+		<if test="market_price !=null">market_price=#{market_price},</if>
+		<if test="shop_price !=null">shop_price=#{shop_price},</if>
+		<if test="createtime !=null">createtime=#{createtime},</if>
+		
+	</trim>
+	where id=#{id}
+</update>
+
+
+<select id="selectGoods" resultType="com.entity.Goods" parameterType="com.entity.Goods">
+	select * from goods where 1=1
+	 	<if test="id !=null">and id=#{id}</if>
+		<if test="type !=null">and type=#{type}</if>
+		<if test="suitpeople !=null">and suitpeople=#{suitpeople}</if>
+		<if test="name !=null">and name like "%"#{name}"%"</if>
+		<if test="market_price !=null">and market_price=#{market_price}</if>
+		<if test="shop_price !=null">and shop_price=#{shop_price}</if>	
+		<if test="createtime !=null">and createtime=#{createtime}</if>	
+</select>
+
+
+		
+<select id="selectAllGoods" resultType="com.entity.Goods">
+		select * from goods
+</select>
+
+<select id="selectGoodsByname" resultType="com.entity.Goods">
+		select * from goods where name like CONCAT('%', #{name}, '%')
+</select>
+		  
+</mapper>
+
+

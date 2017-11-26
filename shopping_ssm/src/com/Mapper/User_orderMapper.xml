@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 为mapper指定唯一的命名空间（建议是，dao接口的完整类路径 -->
+<mapper namespace="com.dao.User_orderdao">
+
+<!-- 
+namespace 命名空间 ，以前可以随便命名，当使用接口式编程(sql映射文件要与对应的接口进行动态绑定)时，要命名为接口的全类名
+#{id}:从传递过来的参数取出id值
+-->
+
+<!-- insert 的 id 值 应该为对应dao接口的方法名相同 --> 
+<insert id="insertUser_order" parameterType="com.entity.User_order">         
+insert into user_order
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		
+	<if test='sumprice != null and sumprice != "" '>
+             sumprice,
+    </if>
+    <if test='createtime != null and createtime != "" '>
+             createtime,
+    </if>
+    <if test='username != null and username != "" '>
+             username,
+    </if>
+    <if test='order_status != null and order_status != "" '>
+             order_status,
+    </if>
+    
+    </trim>
+	
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		 
+		    <if test='sumprice != null and sumprice != "" '>
+            		 #{sumprice},
+		    </if>
+		    <if test='createtime != null and createtime != "" '>
+		              #{createtime},
+		    </if>
+		    <if test='username != null and username != "" '>
+		              #{username},
+		    </if>
+		    <if test='order_status != null and order_status != "" '>
+		            #{order_status},
+		    </if>
+		</trim>
+</insert>
+
+
+
+<delete id="deleteUser_order" parameterType="com.entity.User_order">
+delete from user_order where id=#{id}
+</delete>
+		
+
+		
+<update id="updateUser_order" parameterType="com.entity.User_order">
+update user_order
+	<trim prefix="set" suffixOverrides=",">
+		<if test="sumprice !=null">sumprice=#{sumprice},</if>
+		<if test="createtime !=null">createtime=#{createtime},</if>
+		<if test="username !=null">username=#{username},</if>
+		<if test="order_status !=null">order_status=#{order_status},</if>
+		
+		
+	</trim>
+	where id=#{id}
+</update>
+
+
+<select id="selectUser_order" resultType="com.entity.User_order" parameterType="com.entity.User_order">
+	select * from user_order where 1=1
+	 	<if test="id !=null">and id=#{id}</if>
+		<if test="sumprice !=null">and sumprice=#{sumprice}</if>
+		<if test="createtime !=null">and createtime=#{createtime}</if>
+		<if test="username !=null">and username=#{username}</if>
+		<if test="order_status !=null">and order_status=#{order_status}</if>
+		
+</select>
+
+
+		
+<select id="selectAllUser_order" resultType="com.entity.User_order">
+		select * from user_order
+</select>
+
+<select id="selectUser_orderByusername" resultType="com.entity.User_order">
+		select * from user_order where username=#{username}
+</select>
+		  
+</mapper>
+
+

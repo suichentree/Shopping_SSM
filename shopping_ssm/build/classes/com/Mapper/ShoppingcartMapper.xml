@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 为mapper指定唯一的命名空间（建议是，dao接口的完整类路径 -->
+<mapper namespace="com.dao.Shoppingcartdao">
+
+<!-- 
+namespace 命名空间 ，以前可以随便命名，当使用接口式编程(sql映射文件要与对应的接口进行动态绑定)时，要命名为接口的全类名
+#{id}:从传递过来的参数取出id值
+-->
+
+<!-- insert 的 id 值 应该为对应dao接口的方法名相同 --> 
+
+<insert id="insertShoppingcart" parameterType="com.entity.Shoppingcart">         
+insert into shoppingcart
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		
+	<if test='goods_name != null and goods_name != "" '>
+             goods_name,
+    </if>
+    <if test='goods_price != null and goods_price != "" '>
+             goods_price,
+    </if>
+    <if test='goods_count != null and goods_count != "" '>
+             goods_count,
+    </if>
+    <if test='user_name != null and user_name != "" '>
+             user_name,
+    </if>
+    <if test='status != null and status != "" '>
+             status,
+    </if>
+    <if test='order_createtime != null and order_createtime != "" '>
+             order_createtime,
+    </if>
+    
+    
+    
+    </trim>
+	
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		
+		  
+		    <if test='goods_name != null and goods_name != "" '>
+            		 #{goods_name},
+		    </if>
+		    <if test='goods_price != null and goods_price != "" '>
+		              #{goods_price},
+		    </if>
+		    <if test='goods_count != null and goods_count != "" '>
+		              #{goods_count},
+		    </if>
+		    <if test='user_name != null and user_name != "" '>
+		              #{user_name},
+		    </if>
+		    <if test='status != null and status != "" '>
+		              #{status},
+		    </if>
+		    <if test='order_createtime != null and order_createtime != "" '>
+		              #{order_createtime},
+		    </if>
+		 
+		   
+		</trim>
+</insert>
+
+
+<delete id="deleteShoppingcart" parameterType="com.entity.Shoppingcart">
+delete from shoppingcart where id=#{id}
+</delete>
+
+<delete id="deleteShoppingcartByusername_goodsname" parameterType="com.entity.Shoppingcart">
+delete from shoppingcart where user_name=#{user_name} and goods_name=#{goods_name}
+</delete>
+		
+
+		
+<update id="updateShoppingcart" parameterType="com.entity.Shoppingcart">
+update shoppingcart
+	<trim prefix="set" suffixOverrides=",">
+		<if test="goods_name !=null">goods_name=#{goods_name},</if>
+		<if test="goods_price !=null">goods_price=#{goods_price},</if>
+		<if test="goods_count !=null">goods_count=#{goods_count},</if>
+		<if test="user_name !=null">user_name=#{user_name},</if>
+		<if test="status !=null">status=#{status},</if>
+		<if test="order_createtime !=null">order_createtime=#{order_createtime},</if>
+	</trim>
+	where id=#{id}
+</update>
+
+<update id="updateShoppingcartByuser_name" parameterType="com.entity.Shoppingcart">
+update shoppingcart
+	<trim prefix="set" suffixOverrides=",">
+		<if test="goods_name !=null">goods_name=#{goods_name},</if>
+		<if test="goods_price !=null">goods_price=#{goods_price},</if>
+		<if test="goods_count !=null">goods_count=#{goods_count},</if>
+		<if test="status !=null">status=#{status},</if>
+		<if test="order_createtime !=null">order_createtime=#{order_createtime},</if>
+	</trim>
+	where user_name=#{user_name} and order_createtime is null
+</update>
+
+
+<select id="selectShoppingcart" resultType="com.entity.Shoppingcart" parameterType="com.entity.Shoppingcart">
+	select * from shoppingcart where 1=1
+	 	<if test="id !=null">and id=#{id}</if>
+		<if test="goods_name !=null">and goods_name=#{goods_name}</if>
+		<if test="goods_price !=null">and goods_price=#{goods_price}</if>
+		<if test="goods_count !=null">and goods_count=#{goods_count}</if>
+		<if test="user_name !=null">and user_name=#{user_name}</if>
+		<if test="status !=null">and status=#{status}</if>
+		<if test="order_createtime !=null">and order_createtime=#{order_createtime}</if>
+		
+</select>
+
+<select id="selectShoppingcartByname" resultType="com.entity.Shoppingcart" >
+		select * from shoppingcart where goods_name=#{goods_name}
+</select>
+
+
+<select id="selectShoppingcartByuser_nameandstatusandtime" resultType="com.entity.Shoppingcart" parameterType="com.entity.Shoppingcart">
+	select * from shoppingcart where 1=1
+	 	
+		<if test="user_name !=null">and user_name=#{user_name}</if>
+		<if test="status !=null">and status=#{status}</if>
+		<if test="order_createtime !=null">and order_createtime=#{order_createtime}</if>
+		
+</select>
+
+
+<select id="selectAllShoppingcart" resultType="com.entity.Shoppingcart">
+		select * from shoppingcart
+</select>
+		  
+</mapper>
+
+

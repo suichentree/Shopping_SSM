@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- 指定mybatis所用日志的具体实现 -->
+<settings>
+	<setting name="logImpl" value="LOG4J"/>
+</settings>
+
+<!-- mappers标签告诉mybatis去哪里找sql（持久化类）Mapper映射文件 -->
+		 <mappers>
+			<mapper resource="com/Mapper/UserMapper.xml"/>  <!-- sql映射文件的文件路径 -->
+			<mapper resource="com/Mapper/User_orderMapper.xml"/>  
+			<mapper resource="com/Mapper/GoodsMapper.xml"/>  
+			<mapper resource="com/Mapper/ShoppingcartMapper.xml"/>  
+		 </mappers>
+		  
+</configuration>
